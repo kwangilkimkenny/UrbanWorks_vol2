@@ -11,13 +11,25 @@ public class ChangeTerrainHeight_lineMarker : MonoBehaviour
 
 
 
+
+    // Terrain After, Terrain Main_B 는 터레인의 변화량을 계산하기 위한 Terrain
     public Terrain TerrainMain;
+
+    // 터레인 생성위치 추출
     public LineRenderer line;
 
     //public int[,] getWorkAreaList;
     public List<Tuple<int,int>> getWorkAreaList = new List<Tuple<int,int>>();
 
     public Tuple<int, int> leftBottom;
+
+    public float[,] shapeHeights;
+
+    public int TerrainXMax_;
+    public int TerrainZMax_;
+
+    public float SetHeight;
+
 
     [Obsolete]
     void OnGUI()
@@ -37,11 +49,16 @@ public class ChangeTerrainHeight_lineMarker : MonoBehaviour
             line.GetPositions(positions);
             string m_text = m_Inputfiled.text;
 
+            
+
             float setHeiht = float.Parse(m_text);
             //Debug.Log("setHeiht :" + setHeiht);
             //setHeiht = 0.10f;
 
             float height = setHeiht; // define the height of the affected verteces of the terrain
+
+            // 값 전달
+            SetHeight = height;
 
             /* Find the reactangle the shape is in! The sides of the rectangle are based on the most-top, -right, -bottom and -left vertex. */
             float ftop = float.NegativeInfinity;
@@ -76,15 +93,21 @@ public class ChangeTerrainHeight_lineMarker : MonoBehaviour
             int terrainXmax = right - left; // the rightmost edge of the terrain
             int terrainZmax = top - bottom; // the topmost edge of the terrain
 
+            // 값 전
+            TerrainXMax_ = terrainXmax;
+            TerrainZMax_ = terrainZmax;
+
             Debug.Log("left :" + left);
             Debug.Log("bottom :" + bottom);
             //Debug.Log("terrainZmax :" + terrainZmax);
             //Debug.Log("terrainXmax :" + terrainXmax);
 
+
+            // left, bottom 의 값을 가져와서 튜플(두 값을 한쌍으로 저장)로 변환후 public 생성 함수에 저장하고, constManager로 전달하기위함 
             leftBottom = new Tuple<int, int>(left, bottom);
 
 
-            float[,] shapeHeights = TerrainMain.terrainData.GetHeights(left, bottom, terrainXmax, terrainZmax);
+            shapeHeights = TerrainMain.terrainData.GetHeights(left, bottom, terrainXmax, terrainZmax);
 
             Vector2 point; //Create a point Vector2 point to match the shape
 
@@ -121,6 +144,14 @@ public class ChangeTerrainHeight_lineMarker : MonoBehaviour
             //
         }
     }
+
+
+    public void procedualTerrain ()
+    {
+
+    }
+
+
 
     //Checks if the given vertex is inside the the shape.
     bool InsidePolygon(Vector2 p, int terrainZmax)

@@ -44,7 +44,7 @@ public class TerrainHeightCalculator : MonoBehaviour
         int xRes = TerrainMain_A.terrainData.heightmapResolution;
         int yRex = TerrainMain_A.terrainData.alphamapHeight;
 
-        Debug.Log(xRes + ", " + yRex);
+        //Debug.Log(xRes + ", " + yRex);
 
         int xBase = 0;
         int yBase = 0;
@@ -69,7 +69,7 @@ public class TerrainHeightCalculator : MonoBehaviour
         int xRes = TerrainMain_B.terrainData.heightmapResolution;
         int yRex = TerrainMain_B.terrainData.alphamapHeight;
 
-        Debug.Log(xRes + ", " + yRex);
+        //Debug.Log(xRes + ", " + yRex);
 
         int xBase = 0;
         int yBase = 0;
